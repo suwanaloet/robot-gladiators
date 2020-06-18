@@ -38,24 +38,24 @@ var startGame = function () {
         //ask player what they want to do
         var shopOptionPrompt = window.prompt(
             "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE."
-          );
+        );
         // use switch to carry out action
         shopOptionPrompt = parseInt(shopOptionPrompt);
         switch (shopOptionPrompt) {
             case 1:
-              playerInfo.refillHealth();
-              break;
+                playerInfo.refillHealth();
+                break;
             case 2:
-              playerInfo.upgradeAttack();
-              break;
+                playerInfo.upgradeAttack();
+                break;
             case 3:
-              window.alert("Leaving the store.");
-              break;
+                window.alert("Leaving the store.");
+                break;
             default:
-              window.alert("You did not pick a valid option. Try again.");
-              shop();
-              break;
-          }
+                window.alert("You did not pick a valid option. Try again.");
+                shop();
+                break;
+        }
     };
     //rest is static:
     for (var i = 0; i < enemyInfo.length; i++) {
@@ -116,6 +116,13 @@ var fightOrSkip = function () {
 
 //creating function fight
 var fight = function (enemy) {
+    // keep track of who goes first
+    var isPlayerTurn = true;
+
+    // randomly change turn order
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+    }
     while (playerInfo.health > 0 && enemy.health > 0) {
         // ask user if they'd like to fight or skip using fightOrSkip function
         if (fightOrSkip()) {
@@ -158,7 +165,8 @@ var fight = function (enemy) {
         } else {
             window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
         }
-
+        // switch turn order for next round
+        isPlayerTurn = !isPlayerTurn;
     }
 };
 
